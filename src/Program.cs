@@ -116,6 +116,7 @@ namespace Modbus.Containers
                 // Attach callback for Twin desired properties updates
                 await ioTHubModuleClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertiesUpdate, ioTHubModuleClient);
 
+
             }
             catch (AggregateException ex)
             {
@@ -126,6 +127,47 @@ namespace Modbus.Containers
                 }
             }
 
+        }
+
+        static async Task<MethodResponse> WriteModbusCallback(MethodRequest req, object userContext)
+        {
+            try
+            {
+                Console.WriteLine("WriteModbusCallback called");
+
+                var userContextValues = userContext as Tuple<DeviceClient, Slaves.ModuleHandle>;
+                if (userContextValues == null)
+                {
+                    throw new InvalidOperationException("UserContext doesn't contain " +
+                        "expected values");
+                }
+                DeviceClient ioTHubModuleClient = userContextValues.Item1;
+                Slaves.ModuleHandle moduleHandle = userContextValues.Item2;
+
+                var messageBody = JsonConvert.DeserializeObject<ModbusInMessage>(req.DataAsJson);
+
+                if (messageBody != null)
+                {
+                    Console.WriteLine($"Write device {messageBody.HwId}, " +
+                        $"address: {messageBody.Address}, value: {messageBody.Value}");
+
+                    ModbusSlaveSession target = moduleHandle.GetSlaveSession(messageBody.HwId);
+                    if (target == null)
+                    {
+                        Console.WriteLine($"target \"{messageBody.HwId}\" not found!");
+                    }
+                    else
+                    {
+                        await target.WriteCB(messageBody.UId, messageBody.Address, messageBody.Value);
+                    }
+                }
+                return new MethodResponse(200);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"WriteModbus error {exc}");
+                return new MethodResponse((int) MethodResposeStatusCode.UserCodeException);
+            }
         }
 
         /// <summary>
@@ -176,9 +218,9 @@ namespace Modbus.Containers
             return MessageResponse.Completed;
         }
 
-        /// <summary> 
-        /// Callback to handle Twin desired properties updates 
-        /// </summary> 
+        /// <summary>ï¿½
+        /// Callback to handle Twin desired properties updatesï¿½
+        /// </summary>ï¿½
         static async Task OnDesiredPropertiesUpdate(TwinCollection desiredProperties, object userContext)
         {
             DeviceClient ioTHubModuleClient = userContext as DeviceClient;
@@ -287,14 +329,13 @@ namespace Modbus.Containers
                         var userContext = new Tuple<DeviceClient, Slaves.ModuleHandle>(ioTHubModuleClient, moduleHandle);
 #if IOT_EDGE
                     // Register callback to be called when a message is received by the module
-                    await ioTHubModuleClient.SetInputMessageHandlerAsync(
-                    "input1",
-                    PipeMessage,
-                    userContext);
+                    await ioTHubModuleClient.SetInputMessageHandlerAsync("input1", PipeMessage, userContext);                    
+                    await ioTHubModuleClient.SetMethodHandlerAsync("write", WriteModbusCallback, userContext);
 #else
                         m_task_list.Add(Receive(userContext));
 #endif
                         m_task_list.Add(Start(userContext));
+
                     }
                 }
             }
