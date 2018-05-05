@@ -1,9 +1,10 @@
-FROM gcc:7 AS build-env
+FROM arm32v7/gcc:7 AS build-env
 WORKDIR /app
 
 # copy .c and .h file
 COPY src/*.c ./
 COPY src/*.h ./
+#COPY src/libcomWrapper.so ./
 
 # build
 RUN gcc -shared -o libcomWrapper.so -fPIC comWrapper.c

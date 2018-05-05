@@ -7798,11 +7798,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\cwaters\\Source\\Repos\\PSC - NationalGrid FR\\iot-edge-modbus\\src\\iot-edge-modbus.csproj",
+      "projectUniqueName": "C:\\Users\\cwaters\\Source\\Repos\\PSC - NationalGrid FR\\iot-edge-modbus\\src\\iot-edge-modbus.csproj",
       "projectName": "iot-edge-modbus",
-      "projectPath": "c:\\Users\\cwaters\\Source\\Repos\\PSC - NationalGrid FR\\iot-edge-modbus\\src\\iot-edge-modbus.csproj",
+      "projectPath": "C:\\Users\\cwaters\\Source\\Repos\\PSC - NationalGrid FR\\iot-edge-modbus\\src\\iot-edge-modbus.csproj",
       "packagesPath": "C:\\Users\\cwaters\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\cwaters\\Source\\Repos\\PSC - NationalGrid FR\\iot-edge-modbus\\src\\obj\\",
+      "outputPath": "C:\\Users\\cwaters\\Source\\Repos\\PSC - NationalGrid FR\\iot-edge-modbus\\src\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -7824,6 +7824,7 @@
         }
       },
       "warningProperties": {
+        "allWarningsAsErrors": true,
         "warnAsError": [
           "NU1605"
         ]
