@@ -246,7 +246,7 @@
                     val = string.Format("{0,00000}", ((x.Response[m_dataBodyOffset + 2 + i]) * 0x100 + x.Response[m_dataBodyOffset + 3 + i]));
                 }
                 res = cell + ": " + val + "\n";
-                Console.WriteLine(res);
+                Console.WriteLine($"{DateTime.Now}: {res}");
 
                 ModbusOutValue value = new ModbusOutValue()
                 { DisplayName = x.DisplayName, Address = cell, Value = val };
