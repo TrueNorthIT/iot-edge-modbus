@@ -4,7 +4,11 @@
     "image": {
         "repository": "ppfastreserve.azurecr.io/iot-edge-modbus",
         "tag": {
+<<<<<<< Updated upstream
             "version": "0.0.14",
+=======
+            "version": "0.0.15",
+>>>>>>> Stashed changes
             "platforms": {
                 "amd64": "./Dockerfile", 
                 "amd64.debug": "./Dockerfile.amd64.debug",
