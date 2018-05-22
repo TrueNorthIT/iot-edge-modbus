@@ -51,7 +51,11 @@ namespace Modbus.Containers
         public static Task WhenCancelled(CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<bool>();
-            cancellationToken.Register(s => ((TaskCompletionSource<bool>)s).SetResult(true), tcs);
+            cancellationToken.Register(s => 
+                {
+                    Console.WriteLine($"Cancellation token fired...");
+                    ((TaskCompletionSource<bool>)s).SetResult(true);
+                }, tcs);
             return tcs.Task;
         }
 
