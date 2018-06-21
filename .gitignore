@@ -186,3 +186,7 @@ src/obj/Release/netcoreapp2\.0/iot-edge-modbus\.csproj\.CoreCompileInputs\.cache
 src/obj/Release/netcoreapp2\.0/iot-edge-modbus\.csproj\.FileListAbsolute\.txt
 
 src/obj/Release/netcoreapp2\.0/iot-edge-modbus\.dll
+
+src/obj/Debug/netcoreapp2\.0/iot-edge-modbus\.assets\.cache
+
+src/obj/Debug/netcoreapp2\.0/iot-edge-modbus\.csprojAssemblyReference\.cache
